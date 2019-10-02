@@ -28,26 +28,27 @@ struct List {
     void push(int val);
     void createFib();
     bool printList();
+    void delete_list();
 };
 
 void List::createFib() {
     Node *node = new Node;
     node->val = head->val + head->next->val;
     node->next = head;
-    
+
     head = node;
 }
 void List::push(int val) {
     Node *tempNode = new Node;
     tempNode->next = head;
     tempNode->val = val;
-    
+
     head = tempNode;
 }
 
 bool List::printList() {
     Node *traverse = head;
-    
+
     while(traverse) {
         printf("%d ", traverse->val);
         traverse = traverse->next;
@@ -55,22 +56,29 @@ bool List::printList() {
     printf("\n");
 }
 
-int main(){
-    List myList{};
-    
-    // Init fib
-    myList.push(1), myList.push(1);
-    
-    for(int i=0;i<6;i++) myList.createFib();
-    
-    myList.printList();
-    
-    
-    
-    
-    return 0;
+void List::delete_list(){
+  Node *traverse = head;
+  while(traverse != NULL){
+    head = traverse->next;
+    traverse->next = NULL;
+    delete traverse;
+    traverse = head;
+  }
+  delete head;
 }
 
+int main(){
+    List myList{};
+
+    // Init fib
+    myList.push(1), myList.push(1);
+
+    for(int i=0;i<6;i++) myList.createFib();
+
+    myList.printList();
+
+    myList.deleteList();
 
 
-
+    return 0;
+}

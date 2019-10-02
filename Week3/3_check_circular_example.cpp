@@ -30,49 +30,58 @@ struct List {
     Node *head;
     void push(int val);
     bool cycleDetector();
+    void delete_list();
 };
 
 void List::push(int val) {
     Node *tempNode = new Node;
     tempNode->next = head;
     tempNode->val = val;
-    
+
     head = tempNode;
 }
 
 bool List::cycleDetector() {
     Node* fast = head;
     Node* slow = head;
-    
+
     while(fast && slow && fast->next ){
         fast = fast->next->next;
         slow = slow->next;
-        
+
         if(slow == fast) return true;
     }
     return false;
 }
 
+
+void List::delete_list(){
+  Node *traverse = head;
+  while(traverse != NULL){
+    head = traverse->next;
+    traverse->next = NULL;
+    delete traverse;
+    traverse = head;
+  }
+  delete head;
+}
+
 int main(){
     List myList{};
-    
+
     for(int i=0;i<6;i++) myList.push(i);
-    
+
     Node *traverse = myList.head;
     while(traverse->next) traverse = traverse->next;
     traverse->next = myList.head->next;
-    
-    
+
+
     if(myList.cycleDetector()){
         printf("Cycle has found!");
     }else{
         printf("There is no cycle");
     }
-    
-    
+
+
     return 0;
 }
-
-
-
-
